@@ -13,7 +13,7 @@ fun compoundTwo(prefix: String, suffix: String): String = when {
 
 fun compoundVowelAssimilation(prefix: String, suffix: String): String {
     // TODO research
-    return prefix.substring(0, prefix.length - 1) + suffix
+    return prefix + suffix
 }
 
 fun compoundConsonantAssimilation(prefix: String, suffix: String): String {
