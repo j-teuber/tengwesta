@@ -1,6 +1,5 @@
 package com.github.jteuber.tengwesta
 
-import com.gitlab.jteuber.tengwesta.*
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*

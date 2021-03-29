@@ -1,4 +1,4 @@
-package com.gitlab.jteuber.tengwesta
+package com.github.jteuber.tengwesta
 
 import kotlin.text.StringBuilder
 
@@ -115,6 +115,14 @@ fun pseudoSyllables(word: String): List<String> {
 fun String.isHeavy(): Boolean = longVowels.any { this.contains(it) }
         || diphthongs.any { this.contains(it) }
         || consonantClusters.any { this.contains(it) }
+
+fun String.countSyllables() = pseudoSyllables(this).let { syllables ->
+    if (syllables.size == 1 && (vowels + diphthongs).none { syllables.first().contains(it) }) {
+        0
+    } else {
+        syllables.size
+    }
+}
 
 fun String.lengthen(): String = tokenizer(this)
     .map { if(it in longVowelMap.keys)  longVowelMap[it] else it }
