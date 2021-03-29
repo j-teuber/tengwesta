@@ -1,5 +1,5 @@
 package com.github.jteuber.tengwesta
 
-enum class Case { Nom, Dat, Gen, Poss, All, Abl, Loc, Instr }
-enum class Number { Sg, Du, PartPl, Pl }
+enum class Case { Nominative, Dative, Genitive, Possessive, Allative, Ablative, Locative, Instrumental }
+enum class Number { Singular, Dual, PartitivePlural, Plural }
 

@@ -8,34 +8,34 @@ internal class PhonologyTest {
 
     @Test
     fun test_regularize() {
-        assertEquals("nóle feanáro, aran noldoiva inque", regularize("ñōle Fëanáro, aran Ŋoldoiva inkwe"))
+        assertEquals("nóle feanáro, aran noldoiva inqe", Word("ñōle Fëanáro, aran Ŋoldoiva inkwe").regularized)
     }
 
     @Test
     fun test_tokenizer() {
-        assertIterableEquals(listOf("f", "e", "a", "n", "á", "r", "o"), tokenizer("feanáro"))
-        assertIterableEquals(listOf("i", "nqu", "e"), tokenizer("inque"))
-        assertIterableEquals(listOf("a", "mb", "a", "rm", "e", "tt", "ai", "v", "a"), tokenizer("ambarmettaiva"))
+        assertIterableEquals(listOf("f", "e", "a", "n", "á", "r", "o"), Word("feanáro").tokens)
+        assertIterableEquals(listOf("a", "sty", "e"), Word("astye").tokens)
+        assertIterableEquals(listOf("a", "mb", "a", "rm", "e", "tt", "ai", "v", "a"), Word("ambarmettaiva").tokens)
     }
 
     @Test
     fun test_pseudoSyllables() {
-        assertIterableEquals(listOf("fe", "an", "ár", "o"), pseudoSyllables("feanáro"))
-        assertIterableEquals(listOf("inqu", "e"), pseudoSyllables("inque"))
-        assertIterableEquals(listOf("amb", "arm", "ett", "aiv", "a"), pseudoSyllables("ambarmettaiva"))
+        assertIterableEquals(listOf("fe", "an", "ár", "o"), Word("feanáro").pseudoSyllables)
+        assertIterableEquals(listOf("inq", "e"), Word("inqe").pseudoSyllables)
+        assertIterableEquals(listOf("amb", "arm", "ett", "aiv", "a"), Word("ambarmettaiva").pseudoSyllables)
     }
 
     @Test
     fun test_isHeavy() {
-        listOf("lá", "él", "inqu", "att", "uir").forEach { assertTrue(it.isHeavy()) }
-        listOf("la", "el", "if", "at", "ur").forEach { assertFalse(it.isHeavy()) }
+        Word("láélinquattuir").heavySyllables.forEach { assertTrue(it) }
+        Word("atanatar").heavySyllables.forEach { assertFalse(it) }
     }
 
     @Test
     fun test_lengthen() {
-        assertEquals("lá", "la".lengthen())
-        assertEquals("lá", "lá".lengthen())
-        assertEquals("ér", "er".lengthen())
-        assertEquals("úr", "úr".lengthen())
+        assertEquals("lá", Word("la").lengthenedLast)
+        assertEquals("lá", Word("lá").lengthenedLast)
+        assertEquals("ér", Word("er").lengthenedLast)
+        assertEquals("uir", Word("uir").lengthenedLast)
     }
 }

@@ -1,43 +1,34 @@
 package com.github.jteuber.tengwesta
 
-fun compound(vararg parts: String): String =
-    parts.reduceRight { prefix, suffix -> compoundTwo(prefix, suffix) }
-
-fun compoundTwo(prefix: String, suffix: String): String = when {
-    consonants.any { prefix.endsWith(it) } && consonants.any { suffix.startsWith(it) }
+fun compound(prefix: Word, suffix: Word): String = when {
+    prefix.endsWith(consonants) && suffix.startsWith(consonants)
     -> compoundConsonantAssimilation(prefix, suffix)
-    vowels.any { prefix.endsWith(it) } && vowels.any { suffix.startsWith(it) }
+    prefix.endsWith(vowels) && suffix.startsWith(vowels)
     -> compoundVowelAssimilation(prefix, suffix)
     else -> compoundLengthening(prefix, suffix)
 }
 
-fun compoundVowelAssimilation(prefix: String, suffix: String): String {
+fun compoundVowelAssimilation(prefix: Word, suffix: Word): String {
     // TODO research
-    return prefix + suffix
+    return prefix.regularized + suffix.regularized
 }
 
-fun compoundConsonantAssimilation(prefix: String, suffix: String): String {
-    return prefix.substring(0, prefix.length - 1) +
-            (consonantAssimilation[prefix.last().toString() + suffix.first()]
-                ?: prefix.last().toString() + suffix.first()) +
-            suffix.substring(1)
-
+fun compoundConsonantAssimilation(prefix: Word, suffix: Word): String {
+    return prefix.regularized.substring(0, prefix.regularized.length - 1) +
+            (consonantAssimilation[prefix.regularized.last().toString() + suffix.regularized.first()]
+                ?: prefix.regularized.last().toString() + suffix.regularized.first()) +
+            suffix.regularized.substring(1)
 }
 
-fun compoundLengthening(prefix: String, suffix: String): String {
-    val prefixSyllables = pseudoSyllables(prefix)
-    val suffixSyllables = pseudoSyllables(suffix)
-    val noLengthening = suffixSyllables.any { it.isHeavy() }
-            || suffix.countSyllables() < 1
-            || (prefix.countSyllables() > 2
-            && (prefixSyllables[prefixSyllables.size - 2].isHeavy()
-            || prefixSyllables.last().isHeavy()
-            ))
+fun compoundLengthening(prefix: Word, suffix: Word): String {
+    val noLengthening = suffix.heavySyllables.any { it }
+            || suffix.syllableCount < 1
+            || prefix.syllableCount < 3
+            || prefix.heavySyllables.secondToLast()
+            || prefix.heavySyllables.last()
     return if (noLengthening) {
-        prefix + suffix
+        prefix.regularized + suffix.regularized
     } else {
-        (prefixSyllables.subList(0, prefixSyllables.size - 1).joinToString("")
-                + prefixSyllables.last().lengthen()
-                + suffix)
+        prefix.lengthenedLast + suffix.regularized
     }
 }

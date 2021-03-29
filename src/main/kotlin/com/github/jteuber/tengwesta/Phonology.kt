@@ -22,10 +22,10 @@ val vowelAssimilation = mapOf(
 val consonants = listOf("b", "c", "f", "h", "l", "m", "n", "p", "q", "r", "s",
     "t", "v", "w", "x", "y")
 val consonantClusters = listOf(
-    "ld", "mb", "mp", "nc", "nd", "ngw", "ng", "nqu", "nt", "nw", "ps", "qu", "ts", "x",
-    "cc", "hty", "ht", "lc", "ll", "lm", "lp", "lqu", "lt", "lv", "lw", "ly",
-    "mm", "mn", "my", "nn", "nty", "nt", "ny", "pt", "rc", "rd", "rm", "rn", "rp", "rqu",
-    "rr", "rty", "rt", "rs", "rw", "ry", "sc", "squ", "ss", "sty", "st", "sw", "tt", "tw", "ty")
+    "ld", "mb", "mp", "nc", "nd", "ngw", "ng", "nq", "nt", "nw", "ps", "q", "ts", "x",
+    "cc", "hty", "ht", "lc", "ll", "lm", "lp", "lq", "lt", "lv", "lw", "ly",
+    "mm", "mn", "my", "nn", "nty", "nt", "ny", "pt", "rc", "rd", "rm", "rn", "rp", "rq",
+    "rr", "rty", "rt", "rs", "rw", "ry", "sc", "sq", "ss", "sty", "st", "sw", "tt", "tw", "ty")
 val consonantAssimilation = mapOf(
     "ln" to "ld",
     "lr" to "ll",
@@ -62,68 +62,74 @@ val regularisation = mapOf(
     "ë" to "e",
     "ä" to "a",
     "ö" to "o",
-    "q" to "qu",
-    "cw" to "qu",
-    "kw" to "qu"
+    "qu" to "q",
+    "cw" to "q",
+    "kw" to "q"
 )
 
-fun regularize(word: String): String {
-    var result = word.toLowerCase()
-    for ((old, new) in regularisation) {
-        result = result.replace(old, new)
+class Word(input: String, val classes: List<Class> = emptyList()) {
+    val regularized = run {
+        var result = input.toLowerCase()
+        for ((old, new) in regularisation) {
+            result = result.replace(old, new)
+        }
+        result
     }
-    return result
-}
-
-fun tokenizer(word: String): List<String> {
-    val tokens = mutableListOf<String>()
-    var remaining = word
-    while (remaining.isNotEmpty()) when {
-        remaining.length >= 3 && remaining.substring(0, 3) in consonantClusters -> {
-            tokens.add(remaining.substring(0, 3))
-            remaining = remaining.substring(3)
-        }
-        remaining.length >= 2 && remaining.subSequence(0, 2) in consonantClusters + diphthongs -> {
-            tokens.add(remaining.substring(0, 2))
-            remaining = remaining.substring(2)
-        }
-        else -> {
-            tokens.add(remaining.substring(0, 1))
-            remaining = remaining.substring(1)
-        }
-    }
-    return tokens
-}
-
-fun pseudoSyllables(word: String): List<String> {
-    val syllables = mutableListOf(StringBuilder())
-    var isFirstVowel = true
-    for (token in tokenizer(word)) {
-        val vocalic = token !in consonants && token !in consonantClusters
-        when {
-            vocalic && !isFirstVowel -> syllables.add(StringBuilder(token))
-            vocalic && isFirstVowel -> {
-                syllables.last().append(token)
-                isFirstVowel = false
-            }
-            else -> syllables.last().append(token)
-        }
-    }
-    return syllables.map { it.toString() }
-}
-
-fun String.isHeavy(): Boolean = longVowels.any { this.contains(it) }
-        || diphthongs.any { this.contains(it) }
-        || consonantClusters.any { this.contains(it) }
-
-fun String.countSyllables() = pseudoSyllables(this).let { syllables ->
-    if (syllables.size == 1 && (vowels + diphthongs).none { syllables.first().contains(it) }) {
+    val tokens = tokenizer(regularized)
+    val pseudoSyllables = pseudoSyllables()
+    val syllableCount = if (
+        pseudoSyllables.size == 1
+        && !pseudoSyllables.first().contains(vowels, diphthongs)
+    ) {
         0
     } else {
-        syllables.size
+        pseudoSyllables.size
+    }
+
+    val lengthenedLast = pseudoSyllables.subList(0, pseudoSyllables.size - 1).joinToString("") +
+            tokenizer(pseudoSyllables.last()).joinToString("") { longVowelMap[it] ?: it }
+
+    val heavySyllables =
+        pseudoSyllables.map { it.contains(longVowels, diphthongs, consonantClusters) }
+
+    fun contains(vararg soundClasses: List<String>) = regularized.contains(*soundClasses)
+    fun startsWith(vararg soundClasses: List<String>) = regularized.startsWith(*soundClasses)
+    fun endsWith(vararg soundClasses: List<String>) = regularized.endsWith(*soundClasses)
+
+    private fun tokenizer(input: String): List<String> {
+        val tokens = mutableListOf<String>()
+        var remaining = input
+        while (remaining.isNotEmpty()) when {
+            remaining.length >= 3 && remaining.substring(0, 3) in consonantClusters -> {
+                tokens.add(remaining.substring(0, 3))
+                remaining = remaining.substring(3)
+            }
+            remaining.length >= 2 && remaining.subSequence(0, 2) in consonantClusters + diphthongs -> {
+                tokens.add(remaining.substring(0, 2))
+                remaining = remaining.substring(2)
+            }
+            else -> {
+                tokens.add(remaining.substring(0, 1))
+                remaining = remaining.substring(1)
+            }
+        }
+        return tokens
+    }
+
+    private fun pseudoSyllables(): List<String> {
+        val syllables = mutableListOf(StringBuilder())
+        var isFirstVowel = true
+        for (token in tokens) {
+            val vocalic = token !in consonants && token !in consonantClusters
+            when {
+                vocalic && !isFirstVowel -> syllables.add(StringBuilder(token))
+                vocalic && isFirstVowel -> {
+                    syllables.last().append(token)
+                    isFirstVowel = false
+                }
+                else -> syllables.last().append(token)
+            }
+        }
+        return syllables.map { it.toString() }
     }
 }
-
-fun String.lengthen(): String = tokenizer(this)
-    .map { if(it in longVowelMap.keys)  longVowelMap[it] else it }
-    .joinToString(separator = "")
