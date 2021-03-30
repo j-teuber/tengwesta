@@ -4,21 +4,21 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 
-internal class CompoundTest {
+internal class CompoundWithLengtheningTest {
 
     @Test
-    fun test_compound() {
-        assertEquals("noldor", compound(Morpheme("noldo"), Morpheme("r")))
-        assertEquals("tyen", compound(Morpheme("tye"), Morpheme("n")))
-        assertEquals("lindalen", compound(Morpheme("lindale"), Morpheme("n")))
+    fun test_compoundWithLengthening() {
+        assertEquals("noldor", compoundWithLengthening(Morpheme("noldo"), Morpheme("r")).regularized)
+        assertEquals("tyen", compoundWithLengthening(Morpheme("tye"), Morpheme("n")).regularized)
+        assertEquals("lindalen", compoundWithLengthening(Morpheme("lindale"), Morpheme("n")).regularized)
 
-        assertEquals("úcarénen", compound(Morpheme("úcare"), Morpheme("nen")))
-        assertEquals("atanatári", compound(Morpheme("atanatar"), Morpheme("i")))
-        assertEquals("oroméva", compound(Morpheme("orome"), Morpheme("va")))
+        assertEquals("úcarénen", compoundWithLengthening(Morpheme("úcare"), Morpheme("nen")).regularized)
+        assertEquals("atanatári", compoundWithLengthening(Morpheme("atanatar"), Morpheme("i")).regularized)
+        assertEquals("oroméva", compoundWithLengthening(Morpheme("orome"), Morpheme("va")).regularized)
 
-        assertEquals("oromenna", compound(Morpheme("orome"), Morpheme("nna")))
-        assertEquals("marielya", compound(Morpheme("marie"), Morpheme("lya")))
-        assertEquals("nati", compound(Morpheme("nat"), Morpheme("i")))
+        assertEquals("oromenna", compoundWithLengthening(Morpheme("orome"), Morpheme("nna")).regularized)
+        assertEquals("marielya", compoundWithLengthening(Morpheme("marie"), Morpheme("lya")).regularized)
+        assertEquals("nati", compoundWithLengthening(Morpheme("nat"), Morpheme("i")).regularized)
 
 
     }
