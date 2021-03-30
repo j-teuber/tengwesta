@@ -1,5 +1,11 @@
 package com.github.jteuber.tengwesta
 
-enum class Case { Nominative, Dative, Genitive, Possessive, Allative, Ablative, Locative, Instrumental }
-enum class Number { Singular, Dual, PartitivePlural, Plural }
+object NounA : Class() {
+    override val inflections = listOf(
+        BasicInflection("nominative singular", "a"),
+        BasicInflection("dative singular", "an"),
+        BasicInflection("genitive singular", "o"),
+        BasicInflection("possessive singular", "ava"),
+    )
+}
 
