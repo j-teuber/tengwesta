@@ -1,6 +1,6 @@
 package com.github.jteuber.tengwesta
 
-class Morpheme(input: String, val classes: List<Class> = emptyList()) {
+class Morpheme(input: String) {
     val regularized = run {
         var result = input.toLowerCase()
         for ((old, new) in regularisation) {
