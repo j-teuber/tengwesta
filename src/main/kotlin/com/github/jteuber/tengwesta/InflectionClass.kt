@@ -6,8 +6,8 @@ abstract class Class {
 
 abstract class Inflection {
     abstract val name: String
-    abstract fun inflect(word: Word): Word
-    abstract fun unInflect(word: Word): Word
+    abstract fun inflect(morpheme: Morpheme): Morpheme
+    abstract fun unInflect(morpheme: Morpheme): Morpheme
 }
 
 class BasicInflection(
@@ -16,12 +16,12 @@ class BasicInflection(
     val newClasses: List<Class> = emptyList()
 ): Inflection() {
 
-    override fun inflect(word: Word) = Word(
-        compound(word, Word(ending)),
+    override fun inflect(morpheme: Morpheme) = Morpheme(
+        compound(morpheme, Morpheme(ending)),
         newClasses
     )
 
-    override fun unInflect(word: Word): Word {
+    override fun unInflect(morpheme: Morpheme): Morpheme {
         TODO("Not yet implemented")
     }
 

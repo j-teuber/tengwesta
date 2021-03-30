@@ -8,17 +8,17 @@ internal class CompoundTest {
 
     @Test
     fun test_compound() {
-        assertEquals("noldor", compound(Word("noldo"), Word("r")))
-        assertEquals("tyen", compound(Word("tye"), Word("n")))
-        assertEquals("lindalen", compound(Word("lindale"), Word("n")))
+        assertEquals("noldor", compound(Morpheme("noldo"), Morpheme("r")))
+        assertEquals("tyen", compound(Morpheme("tye"), Morpheme("n")))
+        assertEquals("lindalen", compound(Morpheme("lindale"), Morpheme("n")))
 
-        assertEquals("úcarénen", compound(Word("úcare"), Word("nen")))
-        assertEquals("atanatári", compound(Word("atanatar"), Word("i")))
-        assertEquals("oroméva", compound(Word("orome"), Word("va")))
+        assertEquals("úcarénen", compound(Morpheme("úcare"), Morpheme("nen")))
+        assertEquals("atanatári", compound(Morpheme("atanatar"), Morpheme("i")))
+        assertEquals("oroméva", compound(Morpheme("orome"), Morpheme("va")))
 
-        assertEquals("oromenna", compound(Word("orome"), Word("nna")))
-        assertEquals("marielya", compound(Word("marie"), Word("lya")))
-        assertEquals("nati", compound(Word("nat"), Word("i")))
+        assertEquals("oromenna", compound(Morpheme("orome"), Morpheme("nna")))
+        assertEquals("marielya", compound(Morpheme("marie"), Morpheme("lya")))
+        assertEquals("nati", compound(Morpheme("nat"), Morpheme("i")))
 
 
     }
