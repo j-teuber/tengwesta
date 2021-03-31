@@ -1,7 +1,7 @@
 package com.github.jteuber.tengwesta
 
 val nominativeSingular = object : Inflection() {
-    override val name = "nominative singular"
+    override val name = "nominative singular (all)"
     override fun inflect(word: Word) = word
     override fun unInflect(morpheme: Morpheme): Word = Word(morpheme, emptyList())
 }
@@ -158,20 +158,98 @@ val pluralConsonantalAndE = listOf(
     SimpleStem("possessive plural (cons-and-e) elided", "ív"),
 )
 
-val vocalic = commonVocalic + standardVocalicGenitive + standardVocalicPlural
-val aNoun = commonVocalic + aGenitive + standardVocalicPlural
-val eNoun = commonVocalic + standardVocalicGenitive + pluralConsonantalAndE
+val aNounsFromPossessives = commonVocalic + aGenitive + standardVocalicPlural
+
+val vocalicPossessive = listOf(
+    SimpleForm("1-sg possessive (voc)", "nya", aNounsFromPossessives),
+    SimpleForm("2-sg informal possessive (voc)", "tya", aNounsFromPossessives),
+    SimpleForm("2-sg formal possessive (voc)", "lya", aNounsFromPossessives),
+    SimpleForm("3-sg possessive (voc)", "rya", aNounsFromPossessives),
+
+    SimpleForm("1-pl inclusive possessive (voc)", "lva", aNounsFromPossessives),
+    SimpleForm("1-pl exclusive possessive (voc)", "lma", aNounsFromPossessives),
+    SimpleForm("2-pl possessive (voc)", "lda", aNounsFromPossessives),
+    SimpleForm("3-pl possessive (voc)", "nta", aNounsFromPossessives),
+    SimpleForm("3-pl possessive (voc) variant", "lta", aNounsFromPossessives),
+
+    SimpleForm("1-du exclusive possessive (voc)", "mma", aNounsFromPossessives),
+    SimpleForm("1-du inclusive possessive (voc)", "nqa", aNounsFromPossessives),
+    SimpleForm("2-du possessive (voc)", "sta", aNounsFromPossessives),
+    SimpleForm("3-du possessive (voc)", "tta", aNounsFromPossessives),
+
+    SimpleForm("1-sg possessive (voc) elided", "ny"),
+    SimpleForm("2-sg informal possessive (voc) elided", "ty"),
+    SimpleForm("2-sg formal possessive (voc) elided", "ly"),
+    SimpleForm("3-sg possessive (voc) elided", "ry"),
+
+    SimpleForm("1-pl inclusive possessive (voc) elided", "lv"),
+    SimpleForm("1-pl exclusive possessive (voc) elided", "lm"),
+    SimpleForm("2-pl possessive (voc) elided", "ld"),
+    SimpleForm("3-pl possessive (voc) elided", "nt"),
+    SimpleForm("3-pl possessive (voc) variant elided", "lt"),
+
+    SimpleForm("1-du exclusive possessive (voc) elided", "mm"),
+    SimpleForm("1-du inclusive possessive (voc) elided", "nq"),
+    SimpleForm("2-du possessive (voc) elided", "st"),
+    SimpleForm("3-du possessive (voc) elided", "tt"),
+    )
+
+val consonantalPossessive = listOf(
+    SimpleStem("1-sg possessive (cons)", "inya", aNounsFromPossessives),
+    SimpleStem("2-sg informal possessive (cons)", "itya", aNounsFromPossessives),
+    SimpleStem("2-sg formal possessive (cons)", "elya", aNounsFromPossessives),
+    SimpleStem("3-sg possessive (cons)", "erya", aNounsFromPossessives),
+
+    SimpleStem("1-pl inclusive possessive (cons)", "elva", aNounsFromPossessives),
+    SimpleStem("1-pl exclusive possessive (cons)", "elma", aNounsFromPossessives),
+    SimpleStem("2-pl possessive (cons)", "elda", aNounsFromPossessives),
+    SimpleStem("3-pl possessive (cons)", "inta", aNounsFromPossessives),
+    SimpleStem("3-pl possessive (cons) variant", "elta", aNounsFromPossessives),
+
+    SimpleStem("1-du exclusive possessive (cons)", "emma", aNounsFromPossessives),
+    SimpleStem("1-du inclusive possessive (cons)", "inqa", aNounsFromPossessives),
+    SimpleStem("2-du possessive (cons)", "ista", aNounsFromPossessives),
+    SimpleStem("3-du possessive (cons)", "etta", aNounsFromPossessives),
+
+    SimpleStem("1-sg possessive (cons) elided", "iny"),
+    SimpleStem("2-sg informal possessive (cons) elided", "ety"),
+    SimpleStem("2-sg formal possessive (cons) elided", "ely"),
+    SimpleStem("3-sg possessive (cons) elided", "ery"),
+
+    SimpleStem("1-pl inclusive possessive (cons) elided", "elv"),
+    SimpleStem("1-pl exclusive possessive (cons) elided", "elm"),
+    SimpleStem("2-pl possessive (cons) elided", "eld"),
+    SimpleStem("3-pl possessive (cons) elided", "int"),
+    SimpleStem("3-pl possessive (cons) variant elided", "elt"),
+
+    SimpleStem("1-du exclusive possessive (voc) elided", "emm"),
+    SimpleStem("1-du inclusive possessive (voc) elided", "inq"),
+    SimpleStem("2-du possessive (voc) elided", "ist"),
+    SimpleStem("3-du possessive (voc) elided", "ett"),
+)
+
+val vocalic = commonVocalic + standardVocalicGenitive + standardVocalicPlural + vocalicPossessive
+val aNoun = commonVocalic + aGenitive + standardVocalicPlural + vocalicPossessive
+val eNoun = commonVocalic + standardVocalicGenitive + nominativePluralE +
+        pluralConsonantalAndE + vocalicPossessive
 val consonantal = commonConsonantal + standardConsonantalAblative +
         standardConsonantalAllative + standardConsonantalInstrumental +
-        standardConsonantalLocative + pluralConsonantalAndE
+        standardConsonantalLocative + pluralConsonantalAndE + consonantalPossessive
 val nNouns = commonConsonantal + standardConsonantalAblative +
         nAllative + nInstrumental +
-        standardConsonantalLocative + pluralConsonantalAndE
+        standardConsonantalLocative + pluralConsonantalAndE + consonantalPossessive
 
 val sNouns = commonConsonantal + standardConsonantalAblative +
         standardConsonantalAllative + standardConsonantalInstrumental +
-        sLocative + pluralConsonantalAndE
+        sLocative + pluralConsonantalAndE + consonantalPossessive
 
 val lNouns = commonConsonantal + lAblative +
         standardConsonantalAllative + standardConsonantalInstrumental +
-        standardConsonantalLocative + pluralConsonantalAndE
+        standardConsonantalLocative + pluralConsonantalAndE + consonantalPossessive
+
+val all = commonVocalic + standardVocalicGenitive + aGenitive + vocalicPossessive +
+        commonConsonantal + pluralConsonantalAndE + commonConsonantal +
+        standardConsonantalAblative + lAblative +
+        standardConsonantalAllative + nAllative +
+        standardConsonantalInstrumental + nInstrumental +
+        standardConsonantalLocative + sLocative
