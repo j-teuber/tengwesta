@@ -67,7 +67,7 @@ val standardVocalicPlural = listOf(
 )
 
 val standardVocalicGenitive = SimpleForm("genitive singular (voc-not-a)", "o")
-val aGenitive = SimpleStem("genitive singular (a)", "o")
+val aGenitive = FormWithRemoval("genitive singular (a)", "a", "o")
 
 val commonConsonantal = listOf(
     nominativeSingular,
