@@ -20,7 +20,11 @@ class Morpheme(input: String) {
     }
 
     val lengthenedLast = pseudoSyllables.subList(0, pseudoSyllables.size - 1).joinToString("") +
-            tokenizer(pseudoSyllables.last()).joinToString("") { longVowelMap[it] ?: it }
+            if (pseudoSyllables.last().contains(consonantClusters)) {
+                pseudoSyllables.last()
+            } else {
+                tokenizer(pseudoSyllables.last()).joinToString("") { longVowelMap[it] ?: it }
+            }
 
     val heavySyllables =
         pseudoSyllables.map { it.contains(longVowels, diphthongs, consonantClusters) }
