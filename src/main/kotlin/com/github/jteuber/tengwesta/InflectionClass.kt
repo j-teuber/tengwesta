@@ -42,7 +42,7 @@ class FormWithProsodicLengthening(
     override val name: String,
     val ending: String,
     val newInflections: List<Inflection> = emptyList()
-): Inflection() {
+) : Inflection() {
 
     override fun inflect(word: Word) = Word(
         compoundWithLengthening(word.lexicalForm, Morpheme(ending)),
@@ -59,10 +59,31 @@ class StemWithProsodicLengthening(
     override val name: String,
     val ending: String,
     val newInflections: List<Inflection> = emptyList()
-): Inflection() {
+) : Inflection() {
 
     override fun inflect(word: Word) = Word(
         compoundWithLengthening(word.stem, Morpheme(ending)),
+        newInflections
+    )
+
+    override fun unInflect(morpheme: Morpheme): Word {
+        TODO("Not yet implemented")
+    }
+
+}
+
+class FormWithRemoval(
+    override val name: String,
+    val removal: String,
+    val ending: String,
+    val newInflections: List<Inflection> = emptyList()
+) : Inflection() {
+    override fun inflect(word: Word) = Word(
+        Morpheme(
+            word.lexicalForm.regularized.substring(
+                0, word.lexicalForm.regularized.length - removal.length
+            )
+        ),
         newInflections
     )
 
@@ -88,12 +109,11 @@ private fun extractVerbStem(form: Morpheme): List<Morpheme> =
     }
 
 
-
 class FormWithLengthenedStem(
     override val name: String,
     val ending: String,
     val newInflections: List<Inflection> = emptyList()
-): Inflection() {
+) : Inflection() {
     override fun inflect(word: Word): Word {
         val (prefix, stem, suffix) = extractVerbStem(word.lexicalForm)
         return Word(

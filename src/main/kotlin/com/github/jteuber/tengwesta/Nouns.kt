@@ -228,7 +228,7 @@ val consonantalPossessive = listOf(
     SimpleStem("3-du possessive (voc) elided", "ett"),
 )
 
-val vocalic = commonVocalic + standardVocalicGenitive + standardVocalicPlural + vocalicPossessive
+val vocalicNoun = commonVocalic + standardVocalicGenitive + standardVocalicPlural + vocalicPossessive
 val aNoun = commonVocalic + aGenitive + standardVocalicPlural + vocalicPossessive
 val eNoun = commonVocalic + standardVocalicGenitive + nominativePluralE +
         pluralConsonantalAndE + vocalicPossessive
