@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 
-internal class CompoundWithLengtheningTest {
+internal class CompoundTest {
 
     @Test
     fun test_compoundWithLengthening() {
