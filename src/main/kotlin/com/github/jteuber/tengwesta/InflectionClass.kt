@@ -4,6 +4,9 @@ abstract class Inflection {
     abstract val name: String
     abstract fun inflect(word: Word): Word
     abstract fun unInflect(morpheme: Morpheme): Word
+
+    private var eldamo: Long = 0
+    fun eldamo(id: Long) = also { eldamo = id }
 }
 
 class SimpleForm(
