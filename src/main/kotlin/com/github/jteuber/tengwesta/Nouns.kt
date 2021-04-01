@@ -69,6 +69,17 @@ val standardVocalicPlural = listOf(
 val standardVocalicGenitive = SimpleForm("genitive singular (voc-not-a)", "o")
 val aGenitive = FormWithRemoval("genitive singular (a)", "a", "o")
 
+val pluralE = listOf(
+    FormWithRemoval("dative plural (e)", "e", "in"),
+    FormWithRemoval("possessive plural (e)", "e", "íva"),
+    FormWithRemoval("genitive plural (e)", "e", "ion"),
+    FormWithRemoval("allative plural (e)", "e", "innar"),
+    FormWithRemoval("locative plural (e)", "e", "issen"),
+    FormWithRemoval("ablative plural (e)", "e", "illon"),
+
+    FormWithRemoval("possessive plural (e) elided", "e", "ív"),
+)
+
 val commonConsonantal = listOf(
     nominativeSingular,
     StemWithProsodicLengthening("dative singular (cons)", "en"),
@@ -110,9 +121,16 @@ val commonConsonantal = listOf(
     SimpleStem("locative dual (cons) elided", "uss"),
     SimpleStem("ablative dual (cons) elided", "ull"),
 
-    StemWithProsodicLengthening("nominative plural (cons)", "i")
-)
+    StemWithProsodicLengthening("nominative plural (cons)", "i"),
+    StemWithProsodicLengthening("dative plural (cons)", "in"),
+    SimpleStem("possessive plural (cons)", "íva"),
+    SimpleStem("genitive plural (cons)", "ion"),
+    SimpleStem("allative plural (cons)", "innar"),
+    SimpleStem("locative plural (cons)", "issen"),
+    SimpleStem("ablative plural (cons)", "illon"),
 
+    SimpleStem("possessive plural (cons) elided", "ív"),
+)
 val standardConsonantalAllative = listOf(
     SimpleStem("allative plural (cons-not-n)", "enna"),
     SimpleStem("allative plural (cons-not-n) elided", "enn"),
@@ -125,10 +143,10 @@ val standardConsonantalAblative = listOf(
     SimpleStem("ablative plural (cons-not-l)", "ello"),
     SimpleStem("ablative plural (cons-not-l) elided", "ell")
 )
+
 val standardConsonantalInstrumental = listOf(
     SimpleStem("allative plural (cons-not-n)", "anen"),
 )
-
 val nAllative = listOf(
     SimpleStem("allative plural (cons-n)", "na"),
     SimpleStem("allative plural (cons-n) elided", "n"),
@@ -141,22 +159,12 @@ val lAblative = listOf(
     SimpleStem("ablative plural (cons-l)", "lo"),
     SimpleStem("ablative plural (cons-l) elided", "l")
 )
+
 val nInstrumental = listOf(
     SimpleStem("allative plural (cons-not-n)", "nen"),
 )
 
 val nominativePluralE = SimpleStem("nominative plural (cons)", "i")
-
-val pluralConsonantalAndE = listOf(
-    StemWithProsodicLengthening("dative plural (cons-and-e)", "in"),
-    SimpleStem("possessive plural (cons-and-e)", "íva"),
-    SimpleStem("genitive plural (cons-and-e)", "ion"),
-    SimpleStem("allative plural (cons-and-e)", "innar"),
-    SimpleStem("locative plural (cons-and-e)", "issen"),
-    SimpleStem("ablative plural (cons-and-e)", "illon"),
-
-    SimpleStem("possessive plural (cons-and-e) elided", "ív"),
-)
 
 val aNounsFromPossessives = commonVocalic + aGenitive + standardVocalicPlural
 
@@ -192,7 +200,7 @@ val vocalicPossessive = listOf(
     SimpleForm("1-du inclusive possessive (voc) elided", "nq"),
     SimpleForm("2-du possessive (voc) elided", "st"),
     SimpleForm("3-du possessive (voc) elided", "tt"),
-    )
+)
 
 val consonantalPossessive = listOf(
     SimpleStem("1-sg possessive (cons)", "inya", aNounsFromPossessives),
@@ -231,24 +239,24 @@ val consonantalPossessive = listOf(
 val vocalicNoun = commonVocalic + standardVocalicGenitive + standardVocalicPlural + vocalicPossessive
 val aNoun = commonVocalic + aGenitive + standardVocalicPlural + vocalicPossessive
 val eNoun = commonVocalic + standardVocalicGenitive + nominativePluralE +
-        pluralConsonantalAndE + vocalicPossessive
+        pluralE + vocalicPossessive
 val consonantal = commonConsonantal + standardConsonantalAblative +
         standardConsonantalAllative + standardConsonantalInstrumental +
-        standardConsonantalLocative + pluralConsonantalAndE + consonantalPossessive
+        standardConsonantalLocative +  consonantalPossessive
 val nNouns = commonConsonantal + standardConsonantalAblative +
         nAllative + nInstrumental +
-        standardConsonantalLocative + pluralConsonantalAndE + consonantalPossessive
+        standardConsonantalLocative +  consonantalPossessive
 
 val sNouns = commonConsonantal + standardConsonantalAblative +
         standardConsonantalAllative + standardConsonantalInstrumental +
-        sLocative + pluralConsonantalAndE + consonantalPossessive
+        sLocative +  consonantalPossessive
 
 val lNouns = commonConsonantal + lAblative +
         standardConsonantalAllative + standardConsonantalInstrumental +
-        standardConsonantalLocative + pluralConsonantalAndE + consonantalPossessive
+        standardConsonantalLocative +  consonantalPossessive
 
 val all = commonVocalic + standardVocalicGenitive + aGenitive + vocalicPossessive +
-        commonConsonantal + pluralConsonantalAndE + commonConsonantal +
+        commonConsonantal +  commonConsonantal +
         standardConsonantalAblative + lAblative +
         standardConsonantalAllative + nAllative +
         standardConsonantalInstrumental + nInstrumental +
