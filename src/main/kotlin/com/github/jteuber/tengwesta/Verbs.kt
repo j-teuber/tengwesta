@@ -58,6 +58,8 @@ val basicVerbs = listOf(
     SimpleForm("aorist passive participle (basic)", "ina", aAdjectives),
     SimpleForm("future passive participle (basic)", "uvaina", aAdjectives),
     SimpleForm("perfective adjective (basic)", "enwa", aAdjectives),
+
+    FormWithLengthenedStem("present (basic)", "a", subjectMarking),
 )
 
 val uVerbs = listOf(
@@ -71,4 +73,21 @@ val uVerbs = listOf(
     SimpleForm("aorist passive participle (u)", "na", aAdjectives),
     SimpleForm("future passive participle (u)", "vaina", aAdjectives),
     SimpleForm("perfective adjective (u)", "nwa", aAdjectives),
+
+    FormWithLengthenedStem("present (u)", "a", subjectMarking),
+)
+
+val aVerbs = listOf(
+    SimpleForm("aorist (a)", "", subjectMarking),
+    SimpleForm("past (a)", "ne", subjectMarking),
+    FormWithRemoval("future (a)", "a", "uva", subjectMarking),
+    SimpleForm("particular infinitive (a)", "ta", aNoun + objectMarking),
+    FormWithRemoval("gerund (a)", "a", "ie", vocalicNoun),
+    SimpleForm("aorist active participle (a)", "ila"),
+    FormWithRemoval("future active participle (a)", "a", "uvaila"),
+    FormWithRemoval("aorist passive participle (a)", "a", "ina", aAdjectives),
+    FormWithRemoval("future passive participle (a)", "a", "uvaina", aAdjectives),
+    SimpleForm("perfective adjective (a)", "nwa", aAdjectives),
+
+    FormWithLengthenedStem("present (a)", "a", subjectMarking),
 )

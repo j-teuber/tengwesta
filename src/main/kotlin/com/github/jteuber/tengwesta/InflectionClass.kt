@@ -93,20 +93,32 @@ class FormWithRemoval(
 
 }
 
-private fun extractVerbStem(form: Morpheme): List<Morpheme> =
-    if (form.regularized.endsWith(listOf("a", "u"))) {
-        listOf(
-            Morpheme(form.pseudoSyllables.subList(0, form.syllableCount - 2).joinToString("")),
-            Morpheme(form.pseudoSyllables[form.syllableCount - 2]),
-            Morpheme(form.pseudoSyllables.last())
-        )
+private class Verb(form: Morpheme, ancientStem: Morpheme) {
+    val isSimple = !form.endsWith(listOf("a", "u"))
+    val isPossibleFormative = form.endsWith(listOf("ta", "ya"))
+    val formWithoutSuffix = if (isPossibleFormative) {
+        Verb(Morpheme(form.regularized.substring(0, form.regularized.length - 2)), ancientStem)
     } else {
-        listOf(
-            Morpheme(form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")),
-            Morpheme(form.pseudoSyllables.last()),
-            Morpheme("")
-        )
+        null
     }
+    val prefix = if (isSimple) {
+        form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")
+    } else {
+        form.pseudoSyllables.subList(0, form.syllableCount - 2).joinToString("")
+    }
+    val stem = if (isSimple) form.pseudoSyllables.last() else form.pseudoSyllables.secondToLast()
+    val stemTokens = Morpheme(stem).tokens
+    val stemVowel = stemTokens.first { it in diphthongs || it in vowels }
+    val stemOnset = stemTokens.first { it in consonantClusters || it in consonants }
+    val stemCoda = stemTokens.last { it in consonantClusters || it in consonants }
+    val needsMedialDevelopment = if (isSimple) form.syllableCount < 2 else form.syllableCount < 3
+
+    val lengthenedForm = if (isSimple) {
+        form.lengthenedLast
+    } else {
+        Morpheme(form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")).lengthenedLast
+    }
+}
 
 
 class FormWithLengthenedStem(
@@ -115,9 +127,43 @@ class FormWithLengthenedStem(
     val newInflections: List<Inflection> = emptyList()
 ) : Inflection() {
     override fun inflect(word: Word): Word {
-        val (prefix, stem, suffix) = extractVerbStem(word.lexicalForm)
+        val verb = Verb(word.lexicalForm, word.stem)
         return Word(
-            Morpheme(prefix.regularized + stem.lengthenedLast + suffix.regularized),
+            Morpheme(verb.lengthenedForm + ending),
+            newInflections
+        )
+    }
+
+    override fun unInflect(morpheme: Morpheme): Word {
+        TODO("Not yet implemented")
+    }
+}
+
+class FormWithAssimilationSuffix(
+    override val name: String,
+    val ending: String,
+    val newInflections: List<Inflection> = emptyList()
+) : Inflection() {
+    override fun inflect(word: Word): Word {
+        return Word(
+            Morpheme((word.lexicalForm.regularized + ending).replaceAll(consonantAssimilation)),
+            newInflections
+        )
+    }
+
+    override fun unInflect(morpheme: Morpheme): Word {
+        TODO("Not yet implemented")
+    }
+}
+
+class FormWithAssimilationPrefix(
+    override val name: String,
+    val prefix: String,
+    val newInflections: List<Inflection> = emptyList()
+) : Inflection() {
+    override fun inflect(word: Word): Word {
+        return Word(
+            Morpheme((prefix + word.lexicalForm.regularized).replaceAll(consonantAssimilation)),
             newInflections
         )
     }
