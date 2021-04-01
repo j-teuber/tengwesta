@@ -6,10 +6,14 @@ val nominativeSingular = object : Inflection() {
     override fun unInflect(morpheme: Morpheme): Word = Word(morpheme, emptyList())
 }
 
+val possessiveAdjectivePlural = listOf(
+    FormWithRemoval("adjectival plural for possessive", "a", "e")
+)
+
 val commonVocalic = listOf(
     nominativeSingular,
     SimpleForm("dative singular (voc)", "n"),
-    FormWithProsodicLengthening("possessive singular (voc)", "va", aAdjectives),
+    FormWithProsodicLengthening("possessive singular (voc)", "va", possessiveAdjectivePlural),
     SimpleForm("allative singular (voc)", "nna"),
     SimpleForm("locative singular (voc)", "sse"),
     SimpleForm("ablative singular (voc)", "llo"),
@@ -23,7 +27,7 @@ val commonVocalic = listOf(
     FormWithProsodicLengthening("nominative partitive-plural (voc)", "li"),
     FormWithProsodicLengthening("dative partitive-plural (voc)", "lin"),
     SimpleForm("genitive partitive-plural (voc)", "lion"),
-    SimpleForm("possessive partitive-plural (voc)", "líva", aAdjectives),
+    SimpleForm("possessive partitive-plural (voc)", "líva", possessiveAdjectivePlural),
     SimpleForm("allative partitive-plural (voc)", "linnar"),
     SimpleForm("locative partitive-plural (voc)", "lissen"),
     SimpleForm("ablative partitive-plural (voc)", "lillon"),
@@ -41,7 +45,7 @@ val commonVocalic = listOf(
 
     SimpleForm("nominative dual (voc)", "t"),
     SimpleForm("dative dual (voc)", "nt"),
-    SimpleForm("possessive dual (voc)", "twa", aAdjectives),
+    SimpleForm("possessive dual (voc)", "twa", possessiveAdjectivePlural),
     FormWithProsodicLengthening("genitive dual (vocalic)", "to"),
     SimpleForm("allative dual (voc)", "nta"),
     SimpleForm("locative dual (voc)", "tse"),
@@ -58,7 +62,7 @@ val commonVocalic = listOf(
 val standardVocalicPlural = listOf(
     SimpleForm("nominative plural (voc-not-e)", "r"),
     SimpleForm("dative plural (voc-not-e)", "in"),
-    SimpleForm("possessive plural (voc-not-e)", "iva", aAdjectives),
+    SimpleForm("possessive plural (voc-not-e)", "iva", possessiveAdjectivePlural),
     FormWithProsodicLengthening("genitive plural (voc-not-e)", "ron"),
     SimpleForm("allative plural (voc-not-e)", "nnar"),
     SimpleForm("locative plural (voc-not-e)", "ssen"),
@@ -72,7 +76,7 @@ val aGenitive = FormWithRemoval("genitive singular (a)", "a", "o")
 
 val pluralE = listOf(
     FormWithRemoval("dative plural (e)", "e", "in"),
-    FormWithRemoval("possessive plural (e)", "e", "íva", aAdjectives),
+    FormWithRemoval("possessive plural (e)", "e", "íva", possessiveAdjectivePlural),
     FormWithRemoval("genitive plural (e)", "e", "ion"),
     FormWithRemoval("allative plural (e)", "e", "innar"),
     FormWithRemoval("locative plural (e)", "e", "issen"),
@@ -84,7 +88,7 @@ val pluralE = listOf(
 val commonConsonantal = listOf(
     nominativeSingular,
     StemWithProsodicLengthening("dative singular (cons)", "en"),
-    SimpleStem("possessive singular (cons)", "wa", aAdjectives),
+    SimpleStem("possessive singular (cons)", "wa", possessiveAdjectivePlural),
     StemWithProsodicLengthening("genitive singular (cons)", "o"),
 
     SimpleStem("possessive singular (cons) elided", "w"),
@@ -92,7 +96,7 @@ val commonConsonantal = listOf(
     SimpleStem("nominative partitive-plural (cons)", "éli"),
     SimpleStem("dative partitive-plural (cons)", "élin"),
     SimpleStem("genitive partitive-plural (cons)", "élion"),
-    SimpleStem("possessive partitive-plural (cons)", "elíva", aAdjectives),
+    SimpleStem("possessive partitive-plural (cons)", "elíva", possessiveAdjectivePlural),
     SimpleStem("allative partitive-plural (cons)", "linnar"),
     SimpleStem("locative partitive-plural (cons)", "lissen"),
     SimpleStem("ablative partitive-plural (cons)", "lillon"),
@@ -110,7 +114,7 @@ val commonConsonantal = listOf(
 
     StemWithProsodicLengthening("nominative dual (cons)", "u"),
     StemWithProsodicLengthening("dative dual (cons)", "un"),
-    SimpleStem("possessive dual (cons)", "úwa", aAdjectives),
+    SimpleStem("possessive dual (cons)", "úwa", possessiveAdjectivePlural),
     SimpleStem("genitive dual (cons)", "uo"),
     SimpleStem("allative dual (cons)", "unna"),
     SimpleStem("locative dual (cons)", "usse"),
@@ -125,7 +129,7 @@ val commonConsonantal = listOf(
 
     StemWithProsodicLengthening("nominative plural (cons)", "i"),
     StemWithProsodicLengthening("dative plural (cons)", "in"),
-    SimpleStem("possessive plural (cons)", "íva", aAdjectives),
+    SimpleStem("possessive plural (cons)", "íva", possessiveAdjectivePlural),
     SimpleStem("genitive plural (cons)", "ion"),
     SimpleStem("allative plural (cons)", "innar"),
     SimpleStem("locative plural (cons)", "issen"),
