@@ -1,6 +1,6 @@
 package com.github.jteuber.tengwesta
 
-val aAdjectives = listOf(
+val aAdjectives: List<Inflection> = listOf(
     FormWithRemoval("plural (a)", "a", "e"),
     SimpleForm("adjective as noun (a)", "", aNoun),
     FormWithProsodicLengthening("adverb (a-ea)", "ve")
