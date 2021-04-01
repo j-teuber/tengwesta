@@ -172,3 +172,21 @@ class FormWithAssimilationPrefix(
         TODO("Not yet implemented")
     }
 }
+
+class ChainInflection(
+    override val name: String,
+    val newInflections: List<Inflection> = emptyList(),
+    vararg inflections: Inflection
+) : Inflection() {
+    val subInflection = inflections
+
+    override fun inflect(word: Word): Word {
+        var result = word
+        for (inflection in subInflection) result = inflection.inflect(result)
+        return Word(result.lexicalForm, newInflections)
+    }
+
+    override fun unInflect(morpheme: Morpheme): Word {
+        TODO("Not yet implemented")
+    }
+}

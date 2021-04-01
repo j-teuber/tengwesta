@@ -45,7 +45,7 @@ val subjectMarking = listOf(
 
     SimpleForm("dual subject agreement", "t"),
     SimpleForm("plural subject agreement", "r")
-    )
+)
 
 val basicVerbs = listOf(
     SimpleForm("aorist stand-alone (basic)", "e"),
@@ -89,5 +89,54 @@ val aVerbs = listOf(
     FormWithRemoval("future passive participle (a)", "a", "uvaina", aAdjectives),
     SimpleForm("perfective adjective (a)", "nwa", aAdjectives),
 
-    FormWithLengthenedStem("present (a)", "a", subjectMarking),
+    ChainInflection(
+        "present (a)",
+        subjectMarking,
+        FormWithRemoval("step I", "a", ""),
+        FormWithLengthenedStem("step II", "ea")
+    )
+)
+
+val causativeVerbs = listOf(
+    SimpleForm("future (causative)", "uva", subjectMarking),
+    SimpleForm("future active participle (causative)", "uvaila"),
+    SimpleForm("aorist passive participle (causative)", "ina", aAdjectives),
+    SimpleForm("future passive participle (causative)", "uvaina", aAdjectives),
+)
+
+val taFormatives = listOf(
+    ChainInflection(
+        "strong intransitive past (ta-formatives)", subjectMarking,
+        FormWithRemoval("step I", "ta", ""),
+        FormWithAssimilationSuffix("step II", "ne")
+    ),
+    FormWithRemoval("particular infinitive (ta-formatives)", "ta", "ita", aNoun + objectMarking),
+    FormWithRemoval("aorist passive participle (ta-formatives)", "ta", "ina", aAdjectives),
+    FormWithRemoval("future passive participle (ta-formatives)", "ta", "uvaina", aAdjectives),
+
+    FormWithRemoval("present (ta-formative)", "ta", "tya", subjectMarking),
+    FormWithRemoval("present (ta-formative)", "ta", "tia", subjectMarking),
+    FormWithRemoval("present (ta-formative)", "ta", "tea", subjectMarking),
+)
+
+val yaFormatives = listOf(
+    ChainInflection(
+        "strong intransitive past (ya-formatives)", subjectMarking,
+        FormWithRemoval("step I", "ya", ""),
+        FormWithAssimilationSuffix("step II", "ne")
+    ),
+    FormWithRemoval("particular infinitive (ya-formatives)", "ya", "ita", aNoun + objectMarking),
+    FormWithRemoval("aorist passive participle (ya-formatives)", "ya", "ina", aAdjectives),
+    FormWithRemoval("future passive participle (ya-formatives)", "ya", "uvaina", aAdjectives),
+
+    ChainInflection(
+        "present (ya-formative)", subjectMarking,
+        FormWithRemoval("step I", "ya", ""),
+        FormWithLengthenedStem("step II", "ia")
+    ),
+    ChainInflection(
+        "present (ya-formative)", subjectMarking,
+        FormWithRemoval("step I", "ya", ""),
+        FormWithLengthenedStem("step II", "ea")
+    )
 )
