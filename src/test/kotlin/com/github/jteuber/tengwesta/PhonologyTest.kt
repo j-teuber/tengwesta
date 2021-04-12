@@ -8,34 +8,34 @@ internal class PhonologyTest {
 
     @Test
     fun test_regularize() {
-        assertEquals("nóle feanáro, aran noldoiva inqe", Morpheme("ñōle Fëanáro, aran Ŋoldoiva inkwe").regularized)
+        assertEquals("nóle feanáro, aran noldoiva inqe", Form("ñōle Fëanáro, aran Ŋoldoiva inkwe").regularized)
     }
 
     @Test
     fun test_tokenizer() {
-        assertIterableEquals(listOf("f", "e", "a", "n", "á", "r", "o"), Morpheme("feanáro").tokens)
-        assertIterableEquals(listOf("a", "sty", "e"), Morpheme("astye").tokens)
-        assertIterableEquals(listOf("a", "mb", "a", "rm", "e", "tt", "ai", "v", "a"), Morpheme("ambarmettaiva").tokens)
+        assertIterableEquals(listOf("f", "e", "a", "n", "á", "r", "o"), Form("feanáro").tokens)
+        assertIterableEquals(listOf("a", "sty", "e"), Form("astye").tokens)
+        assertIterableEquals(listOf("a", "mb", "a", "rm", "e", "tt", "ai", "v", "a"), Form("ambarmettaiva").tokens)
     }
 
     @Test
     fun test_pseudoSyllables() {
-        assertIterableEquals(listOf("fe", "an", "ár", "o"), Morpheme("feanáro").pseudoSyllables)
-        assertIterableEquals(listOf("inq", "e"), Morpheme("inqe").pseudoSyllables)
-        assertIterableEquals(listOf("amb", "arm", "ett", "aiv", "a"), Morpheme("ambarmettaiva").pseudoSyllables)
+        assertIterableEquals(listOf("fe", "an", "ár", "o"), Form("feanáro").pseudoSyllables)
+        assertIterableEquals(listOf("inq", "e"), Form("inqe").pseudoSyllables)
+        assertIterableEquals(listOf("amb", "arm", "ett", "aiv", "a"), Form("ambarmettaiva").pseudoSyllables)
     }
 
     @Test
     fun test_isHeavy() {
-        Morpheme("láélinquattuir").heavySyllables.forEach { assertTrue(it) }
-        Morpheme("atanatar").heavySyllables.forEach { assertFalse(it) }
+        Form("láélinquattuir").heavySyllables.forEach { assertTrue(it) }
+        Form("atanatar").heavySyllables.forEach { assertFalse(it) }
     }
 
     @Test
     fun test_lengthen() {
-        assertEquals("lá", Morpheme("la").lengthenedLast)
-        assertEquals("lá", Morpheme("lá").lengthenedLast)
-        assertEquals("ér", Morpheme("er").lengthenedLast)
-        assertEquals("uir", Morpheme("uir").lengthenedLast)
+        assertEquals("lá", Form("la").lengthenedLast)
+        assertEquals("lá", Form("lá").lengthenedLast)
+        assertEquals("ér", Form("er").lengthenedLast)
+        assertEquals("uir", Form("uir").lengthenedLast)
     }
 }

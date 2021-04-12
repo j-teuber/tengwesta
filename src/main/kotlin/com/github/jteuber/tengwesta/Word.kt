@@ -1,7 +1,7 @@
 package com.github.jteuber.tengwesta
 
 class Word(
-    val lexicalForm: Morpheme,
+    val lexicalForm: Form,
     val inflections: List<Inflection>,
-    val stem: Morpheme = lexicalForm
+    val stem: Form = lexicalForm
 )

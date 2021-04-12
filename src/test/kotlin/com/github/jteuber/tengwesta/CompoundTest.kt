@@ -8,17 +8,17 @@ internal class CompoundTest {
 
     @Test
     fun test_compoundWithLengthening() {
-        assertEquals("noldor", compoundWithLengthening(Morpheme("noldo"), Morpheme("r")).regularized)
-        assertEquals("tyen", compoundWithLengthening(Morpheme("tye"), Morpheme("n")).regularized)
-        assertEquals("lindalen", compoundWithLengthening(Morpheme("lindale"), Morpheme("n")).regularized)
+        assertEquals("noldor", compoundWithLengthening(Form("noldo"), Form("r")).regularized)
+        assertEquals("tyen", compoundWithLengthening(Form("tye"), Form("n")).regularized)
+        assertEquals("lindalen", compoundWithLengthening(Form("lindale"), Form("n")).regularized)
 
-        assertEquals("úcarénen", compoundWithLengthening(Morpheme("úcare"), Morpheme("nen")).regularized)
-        assertEquals("atanatári", compoundWithLengthening(Morpheme("atanatar"), Morpheme("i")).regularized)
-        assertEquals("oroméva", compoundWithLengthening(Morpheme("orome"), Morpheme("va")).regularized)
+        assertEquals("úcarénen", compoundWithLengthening(Form("úcare"), Form("nen")).regularized)
+        assertEquals("atanatári", compoundWithLengthening(Form("atanatar"), Form("i")).regularized)
+        assertEquals("oroméva", compoundWithLengthening(Form("orome"), Form("va")).regularized)
 
-        assertEquals("oromenna", compoundWithLengthening(Morpheme("orome"), Morpheme("nna")).regularized)
-        assertEquals("marielya", compoundWithLengthening(Morpheme("marie"), Morpheme("lya")).regularized)
-        assertEquals("nati", compoundWithLengthening(Morpheme("nat"), Morpheme("i")).regularized)
+        assertEquals("oromenna", compoundWithLengthening(Form("orome"), Form("nna")).regularized)
+        assertEquals("marielya", compoundWithLengthening(Form("marie"), Form("lya")).regularized)
+        assertEquals("nati", compoundWithLengthening(Form("nat"), Form("i")).regularized)
 
 
     }

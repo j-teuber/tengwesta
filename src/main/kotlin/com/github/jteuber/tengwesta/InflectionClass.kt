@@ -3,7 +3,7 @@ package com.github.jteuber.tengwesta
 abstract class Inflection {
     abstract val name: String
     abstract fun inflect(word: Word): Word
-    abstract fun unInflect(morpheme: Morpheme): Word
+    abstract fun unInflect(morpheme: Form): Word
 
     private var eldamo: Long = 0
     fun eldamo(id: Long) = also { eldamo = id }
@@ -15,11 +15,11 @@ class SimpleForm(
     val newInflections: List<Inflection> = emptyList()
 ) : Inflection() {
     override fun inflect(word: Word) = Word(
-        Morpheme(word.lexicalForm.regularized + ending),
+        Form(word.lexicalForm.regularized + ending),
         newInflections
     )
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 
@@ -31,11 +31,11 @@ class SimpleStem(
     val newInflections: List<Inflection> = emptyList()
 ) : Inflection() {
     override fun inflect(word: Word) = Word(
-        Morpheme(word.stem.regularized + ending),
+        Form(word.stem.regularized + ending),
         newInflections
     )
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 
@@ -48,11 +48,11 @@ class FormWithProsodicLengthening(
 ) : Inflection() {
 
     override fun inflect(word: Word) = Word(
-        compoundWithLengthening(word.lexicalForm, Morpheme(ending)),
+        compoundWithLengthening(word.lexicalForm, Form(ending)),
         newInflections
     )
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 
@@ -65,11 +65,11 @@ class StemWithProsodicLengthening(
 ) : Inflection() {
 
     override fun inflect(word: Word) = Word(
-        compoundWithLengthening(word.stem, Morpheme(ending)),
+        compoundWithLengthening(word.stem, Form(ending)),
         newInflections
     )
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 
@@ -82,7 +82,7 @@ class FormWithRemoval(
     val newInflections: List<Inflection> = emptyList()
 ) : Inflection() {
     override fun inflect(word: Word) = Word(
-        Morpheme(
+        Form(
             word.lexicalForm.regularized.substring(
                 0, word.lexicalForm.regularized.length - removal.length
             )
@@ -90,17 +90,17 @@ class FormWithRemoval(
         newInflections
     )
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 
 }
 
-private class Verb(form: Morpheme, ancientStem: Morpheme) {
+private class Verb(form: Form, ancientStem: Form) {
     val isSimple = !form.endsWith(listOf("a", "u"))
     val isPossibleFormative = form.endsWith(listOf("ta", "ya"))
     val formWithoutSuffix = if (isPossibleFormative) {
-        Verb(Morpheme(form.regularized.substring(0, form.regularized.length - 2)), ancientStem)
+        Verb(Form(form.regularized.substring(0, form.regularized.length - 2)), ancientStem)
     } else {
         null
     }
@@ -110,7 +110,7 @@ private class Verb(form: Morpheme, ancientStem: Morpheme) {
         form.pseudoSyllables.subList(0, form.syllableCount - 2).joinToString("")
     }
     val stem = if (isSimple) form.pseudoSyllables.last() else form.pseudoSyllables.secondToLast()
-    val stemTokens = Morpheme(stem).tokens
+    val stemTokens = Form(stem).tokens
     val stemVowel = stemTokens.first { it in diphthongs || it in vowels }
     val stemOnset = stemTokens.first { it in consonantClusters || it in consonants }
     val stemCoda = stemTokens.last { it in consonantClusters || it in consonants }
@@ -119,7 +119,7 @@ private class Verb(form: Morpheme, ancientStem: Morpheme) {
     val lengthenedForm = if (isSimple) {
         form.lengthenedLast
     } else {
-        Morpheme(form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")).lengthenedLast
+        Form(form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")).lengthenedLast
     }
 }
 
@@ -132,12 +132,12 @@ class FormWithLengthenedStem(
     override fun inflect(word: Word): Word {
         val verb = Verb(word.lexicalForm, word.stem)
         return Word(
-            Morpheme(verb.lengthenedForm + ending),
+            Form(verb.lengthenedForm + ending),
             newInflections
         )
     }
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 }
@@ -149,12 +149,12 @@ class FormWithAssimilationSuffix(
 ) : Inflection() {
     override fun inflect(word: Word): Word {
         return Word(
-            Morpheme((word.lexicalForm.regularized + ending).replaceAll(consonantAssimilation)),
+            Form((word.lexicalForm.regularized + ending).replaceAll(consonantAssimilation)),
             newInflections
         )
     }
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 }
@@ -166,12 +166,12 @@ class FormWithAssimilationPrefix(
 ) : Inflection() {
     override fun inflect(word: Word): Word {
         return Word(
-            Morpheme((prefix + word.lexicalForm.regularized).replaceAll(consonantAssimilation)),
+            Form((prefix + word.lexicalForm.regularized).replaceAll(consonantAssimilation)),
             newInflections
         )
     }
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 }
@@ -189,7 +189,7 @@ class ChainInflection(
         return Word(result.lexicalForm, newInflections)
     }
 
-    override fun unInflect(morpheme: Morpheme): Word {
+    override fun unInflect(morpheme: Form): Word {
         TODO("Not yet implemented")
     }
 }
