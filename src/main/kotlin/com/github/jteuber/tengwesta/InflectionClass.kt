@@ -85,7 +85,7 @@ class FormWithRemoval(
         Form(
             word.lexicalForm.regularized.substring(
                 0, word.lexicalForm.regularized.length - removal.length
-            )
+            ) + ending
         ),
         newInflections
     )
@@ -119,7 +119,7 @@ private class Verb(form: Form, ancientStem: Form) {
     val lengthenedForm = if (isSimple) {
         form.lengthenedLast
     } else {
-        Form(form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")).lengthenedLast
+        Form(form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")).lengthenedLast + form.pseudoSyllables.last()
     }
 }
 

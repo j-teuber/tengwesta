@@ -20,7 +20,7 @@ class Form(input: String) {
     }
 
     val lengthenedLast = pseudoSyllables.subList(0, pseudoSyllables.size - 1).joinToString("") +
-            if (pseudoSyllables.last().contains(consonantClusters)) {
+            if (pseudoSyllables.last().endsWith(consonantClusters)) {
                 pseudoSyllables.last()
             } else {
                 tokenizer(pseudoSyllables.last()).joinToString("") { longVowelMap[it] ?: it }

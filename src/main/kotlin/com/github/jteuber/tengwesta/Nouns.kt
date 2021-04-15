@@ -2,7 +2,7 @@ package com.github.jteuber.tengwesta
 
 val nominativeSingular = object : Inflection() {
     override val name = "nominative singular (all)"
-    override fun inflect(word: Word) = word
+    override fun inflect(word: Word) = Word(word.lexicalForm, emptyList())
     override fun unInflect(morpheme: Form): Word = Word(morpheme, emptyList())
 }.eldamo(2867812551)
 
