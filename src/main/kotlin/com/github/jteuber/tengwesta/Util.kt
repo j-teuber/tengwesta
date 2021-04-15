@@ -40,3 +40,10 @@ fun <E> List<E>.lastN(n: Int) = if (n >= size) {
 } else {
     subList(size-n, size)
 }
+
+fun <E> List<E>.str() = joinToString("")
+fun <E> List<E>.sublist(indexOffset: Int) = if (indexOffset < 0) {
+    subList(0, size - indexOffset)
+} else {
+    subList(indexOffset, size)
+}

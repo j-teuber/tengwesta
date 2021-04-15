@@ -119,7 +119,9 @@ private class Verb(form: Form, ancientStem: Form) {
     val lengthenedForm = if (isSimple) {
         form.lengthenedLast
     } else {
-        Form(form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")).lengthenedLast + form.pseudoSyllables.last()
+        Form(
+            form.pseudoSyllables.subList(0, form.syllableCount - 1).joinToString("")
+        ).lengthenedLast + form.pseudoSyllables.last()
     }
 }
 
@@ -148,9 +150,13 @@ class FormWithAssimilationSuffix(
     val newInflections: List<Inflection> = emptyList()
 ) : Inflection() {
     override fun inflect(word: Word): Word {
+        val end = Form(ending)
         return Word(
-            Form((word.lexicalForm.regularized + ending).replaceAll(consonantAssimilation)),
-            newInflections
+            Form(
+                word.lexicalForm.tokens.sublist(-1).str() +
+                        (word.lexicalForm.tokens.last() + end.tokens.first()).replaceAll(consonantAssimilation) +
+                        end.tokens.sublist(1).str()
+            ), newInflections
         )
     }
 
@@ -165,8 +171,13 @@ class FormWithAssimilationPrefix(
     val newInflections: List<Inflection> = emptyList()
 ) : Inflection() {
     override fun inflect(word: Word): Word {
+        val pre = Form(prefix)
         return Word(
-            Form((prefix + word.lexicalForm.regularized).replaceAll(consonantAssimilation)),
+            Form(
+                pre.tokens.sublist(-1).str() +
+                        (pre.tokens.last() + word.lexicalForm.tokens.first()).replaceAll(consonantAssimilation) +
+                        word.lexicalForm.tokens.sublist(1).str()
+            ),
             newInflections
         )
     }
